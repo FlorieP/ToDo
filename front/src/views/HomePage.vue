@@ -6,24 +6,6 @@
             <div class="tasks">
                 <!-- Title area -->
                 <h1 class="tasks_title fredericka">My Tasks</h1>
-                <!-- A task exemple fix -->
-                <div class="mini_task">
-                    <!-- Icon Check -->
-                    <div class="mini_task_icon i_check">
-                        <i v-if="mode == 'check'" class="far fa-check-square"></i>
-                        <i v-else class="far fa-square"></i>
-                    </div> 
-                    <!-- Title task -->
-                    <div class="mini_task_title">
-                        <a :href="'./task'">
-                            <p>Task 1</p> 
-                        </a>
-                    </div> 
-                    <!-- Icon Supp -->
-                    <div class="mini_task_icon i_supp">
-                        <i class="fa-regular fa-trash-can gray"></i>
-                    </div> 
-                </div>
                 <!-- A task -->
                 <div v-for="task in tasks" :key="task._id" class="mini_task">
                     <!-- Icon Check -->
@@ -34,12 +16,13 @@
                     <!-- Title task -->
                     <div class="mini_task_title">
                         <a :href="'./task/' + task._id">
-                            <p>{{task.name}}</p> 
+                            <strike v-if="task.check == true"><p>{{task.name}}</p></strike> 
+                            <p v-else>{{task.name}}</p> 
                         </a>
                     </div> 
                     <!-- Icon Supp -->
                     <div class="mini_task_icon i_supp">
-                        <i class="fa-regular fa-trash-can gray"></i>
+                        <i @click="deleteTask(task._id)" class="fa-regular fa-trash-can gray"></i>
                     </div> 
                 </div>
                 <!-- Button new task -->
@@ -79,7 +62,10 @@ export default {
     // Méthode Task  
     methods: {
         //Fonction de suppression
-        
+        deleteTask: function (task_id) {
+            this.$store.dispatch("deleteTask", task_id);
+            this.$router.go()	// Rafraichir la page
+        }
     }  
 }
 </script>
@@ -142,12 +128,6 @@ export default {
     font-size: 16px;
     text-align: left;
     cursor: pointer;
-}
-
-/***** CHANGE AFTER CLICK *****/
-.mini_task:active {
-    background: #978f8c;
-    text-decoration:line-through;
 }
 
 /***** ICONS *****/

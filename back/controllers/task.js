@@ -5,7 +5,6 @@ const Task = require('../models/Task');
 
 //Création du POST 
 exports.createTask = (req, res, next) => {
-    console.log("bouh1")
     //Création de la nouvelle tâche
     const task = new Task({
         ...req.body

@@ -9,7 +9,7 @@
                     <i class="return far fa-arrow-alt-circle-left"></i>
                 </div>
             </a>
-            <a :href="'./updatetask'">
+            <a :href="'/UpdateTask/' + this.$route.params.id">
                 <div class="modif">
                     <i class="far fa-edit"></i>
                 </div>

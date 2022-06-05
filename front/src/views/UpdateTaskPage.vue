@@ -4,7 +4,7 @@
         <!-- Working Area -->
         <div class="card padding_top">
             <!-- Buttons -->
-            <a :href="'./task'">
+            <a :href="'../task/' + task._id">
                 <div class="return">
                     <i class="return far fa-arrow-alt-circle-left"></i>
                 </div>
@@ -13,21 +13,20 @@
             <div class="task">
                 <!-- Task items -->
                 <div class="form_item">
-                    <input v-model="name_task" class="form_input" type="text" placeholder="Name Task"/>
+                    <input class="form_input" name="task_name" type="text" :value="task.name" @input="updateTaskField"/>
                 </div>
                 <div class="form_item">
-                    <input v-model="description_task" class="form_input" type="text" placeholder="Description Task"/>
+                    <input class="form_input" name="task_description" type="text" :value="task.description" @input="updateTaskField"/>
                 </div> 
                 <div class="form_item">
-                    <select class="form_input" v-model="status_task" id="status">
+                    <select class="form_input" id="task_check">
                         <option value="opt1">ToDo</option>
                         <option value="opt2">Check</option>
                     </select>
-                    <!-- <input v-model="status_task" class="form_input" type="text" placeholder="Status Task"/> -->
                 </div> 
             </div>
             <div class="task_button">
-                <button class="button">
+                <button @click="updateTask()" class="button">
                     <span>Save</span>
                 </button>
             </div>
@@ -36,11 +35,15 @@
 </template>
 
 <script>
+//Importation module Vuex
+import { mapState } from "vuex";
+
 export default {
     name: 'UpdateTaskPage',
-
-    //Importation des données à afficher
-
+    mounted: function () {
+        //Importation des données à afficher
+        this.$store.dispatch("getOneTask", this.$route.params.id);
+    },
     //Déclaration de variables
     data: function () {
         return {
@@ -48,16 +51,27 @@ export default {
     },
     computed: {
     //Permet de récupérer les données du state du store 
-      //  ...mapState([
-     
-      //  ]),
+        ...mapState([
+            "task"
+        ]),
 
     },
     // Méthode Task  
     methods: {
         //fonction qui récupère le nom des champs et les valeurs pour les envoyer au mutateur
-
+        updateTaskField(e) {
+            this.$store.commit("updateTaskField", {
+                newValue: e.target.value,
+                fieldName: e.target.name,
+            });
+        },
         //Modification d'un message
+        updateTask: function () {
+        console.log('fonction update');
+            console.log("taskId " + this.$route.params.id );
+            this.$store.dispatch("updateTask", this.$route.params.id);
+            this.$router.push('/task/' + this.$route.params.id);
+        },        
     }  
 }
 </script>

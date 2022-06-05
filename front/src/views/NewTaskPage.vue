@@ -20,7 +20,7 @@
                 </div> 
             </div>
             <div class="task_button">
-                <button class="button">
+                <button @click="newTask()" class="button">
                     <span>Create</span>
                 </button>
             </div>
@@ -41,14 +41,31 @@ export default {
     },
     computed: {
     //Permet de récupérer les données du state du store 
-       // ...mapState([
-     
+        //...mapState([
+
        // ]),
 
     },
     // Méthode Task  
     methods: {
-        //Création d'un nouveau message
+        //Création d'une nouvelle tâche
+        newTask: function () {
+            console.log("name :" + this.name_task)
+            console.log("description :" + this.description_task)
+            this.$store.dispatch("newTask", {
+                name: this.name_task,
+                description: this.description_task,
+            })
+            .then(
+            (response) => {
+                console.log(response);
+                this.$router.push("./")	// Rafraichir la page
+            },
+            (error) => {
+                console.log(error.message);
+            }
+            );
+        },    
     }  
 }
 </script>
