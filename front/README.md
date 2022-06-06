@@ -1,24 +1,27 @@
-# todo
+# TODO
+## Langages
 
-## Project setup
-```
-npm install
-```
+- HTML5
+- CSS3
+- Vue.js
+- Vuex
+## Installation
+### Front
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+1. Installer Vue.js:
+```bash
+  npm install vue
+``` 
+2. Installer Vuex : 
+```bash
+  npm install vuex@next
+``` 
+3. Puis lancez le serveur en tapant la commande : 
+```bash
+  npm run serve
+``` 
+- Le serveur doit fonctionner sur [`http://localhost:8080/Login`](http://localhost:8080/Login).
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## Auteur
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Florie PONS
