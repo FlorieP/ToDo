@@ -15,7 +15,7 @@ const store = createStore({
             _id: '',
             name: '',
             description:'',
-            check: ''
+            check: false,
         }
     },
     ////////////////// MUTATIONS TASK //////////////////   
@@ -34,11 +34,14 @@ const store = createStore({
             //MAJ du state tasks
             state.tasks = tasks;
         }, 
+        //MAJ du state task après modification tâche
         updateTaskField (state, {newValue, fieldName }) {
-            state.task[fieldName] = newValue,
-            console.log(fieldName),
-            console.log(newValue)
-        },    
+            state.task[fieldName] = newValue
+        },
+        //MAJ du state tasks après modification du status d'une tâche
+        updateCheckStatus (state, {taskIdx, newValue}) {
+            state.tasks[taskIdx].check = newValue
+        },        
     },
     ///////////////////  ACTIONS TASK ////////////////// 
     actions: { 
@@ -66,10 +69,9 @@ const store = createStore({
                     console.log(error);
                 })
             },
+            
         //Fonction de création d'une tâche
         newTask : ({commit}, taskInfos) => {
-            console.log(taskInfos);
-            console.log(commit);
             return new Promise ((resolve, reject) => {
                 axios.post(`http://localhost:3000/api/task/new`, taskInfos)
                     .then(response => {
@@ -84,29 +86,42 @@ const store = createStore({
                     })
             })
         },
-        //Fonction de modification d'une tâche
-        updateTask : ({commit, state}, task_Id) => {
+        //Fonction de modification du status d'une tâche
+        updateTask : ({commit, state}, task_Id) => {  
+            //Récupération de la seule tâche modifée dans le state 
+            let task = state.task;
+            if (task._id != task_Id) {
+                for (const one_task of state.tasks) {
+                    if (one_task._id == task_Id) {
+                        task = one_task;
+                        break;
+                    }
+                }
+                if (task) {
+                    commit('task', task);
+                } else {
+                    return;
+                }
+            }
             return new Promise ((resolve, reject) => {
-            commit;
-            axios.put(`http://localhost:3000/api/task/${task_Id}`, state.task)
+                commit;
+                axios.put(`http://localhost:3000/api/task/${task_Id}`, task)
                 .then(response => {
-                    console.log(response)
                     resolve(response);
                 })
                .catch(error => {
                     console.log(error.message)
                     reject(error.message);
                 })
-            })
+            })  
         },
+
         //Fonction de suppression d'une tâche
         deleteTask : ({commit}, task_Id) => {
-            console.log('id task :' + task_Id)
             return new Promise ((resolve, reject) => {
                 commit;
                 axios.delete(`http://localhost:3000/api/task/${task_Id}`)
                 .then(response => {
-                    //console.log(response)
                     resolve(response);
                 })
                .catch(error => {

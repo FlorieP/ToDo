@@ -14,6 +14,5 @@ router.get('/:id', taskCtrl.getOneTask);
 router.put('/:id', taskCtrl.updateTask);
 router.delete('/:id', taskCtrl.deleteTask);
 
-
 //Exportation de la route Sauce
 module.exports = router;

@@ -3,12 +3,13 @@
     <div class="content">
         <!-- Working Area -->
         <div class="card padding_top">
-            <!-- Buttons -->
+            <!-- Button return -->
             <a :href="'../'">
                 <div class="return">
                     <i class="return far fa-arrow-alt-circle-left"></i>
                 </div>
             </a>
+            <!-- Button modify -->
             <a :href="'/UpdateTask/' + this.$route.params.id">
                 <div class="modif">
                     <i class="far fa-edit"></i>
@@ -41,15 +42,12 @@ import { mapState } from "vuex";
 
 export default {
     name: 'taskPage',
+
     mounted: function () {
         //Importation des données à afficher
         this.$store.dispatch("getOneTask", this.$route.params.id);
     },
-    //Déclaration de variables
-    data: function () {
-        return {
-        };
-    },
+
     computed: {
     //Permet de récupérer les données du state du store 
         ...mapState([
@@ -57,10 +55,6 @@ export default {
         ]),
 
     },
-    // Méthode Task  
-    methods: {
-        
-    }  
 }
 </script>
 
@@ -69,6 +63,7 @@ export default {
 .padding_top{
     padding-top: 45px;
 }
+
 /***** ICONS RETURN & MODIF ******/
 .return{
     position: absolute;
@@ -87,7 +82,6 @@ export default {
 .task{
     display: flex;
     flex-direction: column;
-
 }
 .task_item {
     padding:8px;
@@ -110,24 +104,6 @@ export default {
 h2{
     font-size: 16px;
     margin: 15px 2px 2px 5px;
-}
-
-/***** BUTTON *****/
-.button {
-    background: white;
-    color:gray;
-    border-radius: 8px;
-    font-weight: 800;
-    font-size: 15px;
-    border: none;
-    width: 100%;
-    padding: 16px;
-    transition: .4s background-color;
-}
-.button:hover {
-    cursor:pointer;
-    background: #8d6e63;
-    color:  white;
 }
 
 /******************** RESPONSIVE ********************/

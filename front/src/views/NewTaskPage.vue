@@ -3,7 +3,7 @@
     <div class="content">
         <!-- Working Area -->
         <div class="card padding_top">
-            <!-- Buttons -->
+            <!-- Button return -->
             <a :href="'./'">
                 <div class="return">
                     <i class="return far fa-arrow-alt-circle-left"></i>
@@ -19,6 +19,7 @@
                     <input v-model="description_task" class="form_input" type="text" placeholder="Description Task"/>
                 </div> 
             </div>
+            <!-- Button create -->
             <div class="task_button">
                 <button @click="newTask()" class="button">
                     <span>Create</span>
@@ -31,27 +32,10 @@
 <script>
 export default {
     name: 'NewTaskPage',
-
-    //Importation des données à afficher
-
-    //Déclaration de variables
-    data: function () {
-        return {
-        };
-    },
-    computed: {
-    //Permet de récupérer les données du state du store 
-        //...mapState([
-
-       // ]),
-
-    },
-    // Méthode Task  
+ 
     methods: {
         //Création d'une nouvelle tâche
         newTask: function () {
-            console.log("name :" + this.name_task)
-            console.log("description :" + this.description_task)
             this.$store.dispatch("newTask", {
                 name: this.name_task,
                 description: this.description_task,
@@ -75,6 +59,7 @@ export default {
 .padding_top{
     padding-top: 45px;
 }
+
 /***** ICONS RETURN ******/
 .return{
     position: absolute;
@@ -89,6 +74,8 @@ export default {
     flex-direction: column;
 
 }
+
+/***** FORM *****/
 .form_input {
     padding:8px;
     border: 1px solid transparent;
@@ -127,7 +114,6 @@ export default {
     padding: 8px;
     margin-top: 10px;
     transition: .4s background-color;
-    
 }
 .button:hover {
     cursor:pointer;

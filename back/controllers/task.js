@@ -17,9 +17,10 @@ exports.createTask = (req, res, next) => {
 
 //Création du GET ALL
 exports.getAllTasks = (req, res, next) => {
-    //Fonction find qui permet de trouver toutes les tâches
+    //Fonction find qui permet de trouver toutes les tâches 
+    //Et les trier par ordre du plus récent
      Task.find().sort({_id: -1})
-        //récupération du tableau de toutes les sauces retournées par la base
+        //récupération du tableau de toutes les tâches retournées par la DB
         .then((tasks) => { res.status(200).json(tasks); })
         .catch((error) => {
             res.status(407).json({ message: error.message });
@@ -54,7 +55,7 @@ exports.deleteTask = (req, res, next) => {
     Task.findOne({ _id: req.params.id })
     //fonction qui permet de supprimer la tâche 
     Task.deleteOne({ _id: req.params.id })
-    //suppression de la sauce via le paramètre id
+    //suppression de la tâche via le paramètre id
         .then(() => res.status(200).json({ message: 'Task delete !' }))
         .catch(error => res.status(400).json({ message: error.messager }));
 };
